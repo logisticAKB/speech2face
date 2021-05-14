@@ -42,10 +42,8 @@ function createMediaRecorder(stream) {
     recorder.ondataavailable = function(e) {
         this.chunks.push(e.data);
     };
-    // console.log(recorder);
 
     recorder.onstop = function(event) {
-        // console.log(this.chunks)
         let blob = new Blob(this.chunks, {'type': 'audio/wav;'});
         this.chunks = [];
         let formData = new FormData();
@@ -55,12 +53,12 @@ function createMediaRecorder(stream) {
         type: "POST",
         url: '/api/speech2face/',
         data: formData,
+        dataType: "json",
         processData: false,
         contentType: false,
         success: function(data) {
-            let json = $.parseJSON(data);
-            console.log(json['task_id']);
-            setTimeout(checkResult, checkResultIntervalSec * 1000, json['task_id']);
+            console.log(data['task_id']);
+            setTimeout(checkResult, checkResultIntervalSec * 1000, data['task_id']);
         },
         error: function(jqXHR, textStatus, errorThrown){
             console.error('jqXHR:', jqXHR);
@@ -77,16 +75,16 @@ function checkResult(task_id) {
         type: "GET",
         url: '/api/speech2face/' + task_id,
         data: null,
+        dataType: "json",
         processData: false,
         contentType: false,
         success: function(data) {
-            let json = $.parseJSON(data);
-            console.log(json['status']);
-            console.log(json['result']);
-            if (json['status'] !== 'SUCCESS') {
+            console.log(data['status']);
+            console.log(data['result']);
+            if (data['status'] !== 'SUCCESS') {
                 setTimeout(checkResult, checkResultIntervalSec * 1000, task_id);
             } else {
-                resultSuccess(json['result'])
+                resultSuccess(data['result'])
             }
         },
         error: function(jqXHR, textStatus, errorThrown){
