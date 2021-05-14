@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: gunicorn speech2face.wsgi:application -b 0.0.0.0:8000 --reload
+    volumes:
+      - ./:/usr/speech2face/
+    ports:
+      - 8000:8000
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=localhost
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+    depends_on:
+      - redis
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    depends_on:
+      - web
+    ports:
+      - 80:80
+    volumes:
+      - ./static/:/static
+
+  celery:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: celery -A speech2face worker --loglevel=info --logfile=logs/celery.log --concurrency 4
+    volumes:
+      - ./:/usr/speech2face/
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: redis:5.0.7
