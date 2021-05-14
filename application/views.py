@@ -30,7 +30,7 @@ def submit_speech2face_task(request):
     speech2face_task.apply_async((file_path, ), task_id=task_id)
 
     response = JSONRenderer().render({'task_id': task_id})
-    return Response(response, status=status.HTTP_202_ACCEPTED)
+    return Response(response, content_type='application/json', status=status.HTTP_202_ACCEPTED)
 
 
 @api_view(['GET', 'DELETE'])
@@ -41,19 +41,23 @@ def manage_speech2face_task(request, task_id):
 
         if task_result.status in (PENDING, RETRY, STARTED):
             return Response(JSONRenderer().render({'status': task_result.status}),
+                            content_type='application/json',
                             status=status.HTTP_202_ACCEPTED)
 
         elif task_result.status == SUCCESS:
             return Response(JSONRenderer().render({'status': task_result.status,
                                                    'result': task_result.result}),
+                            content_type='application/json',
                             status=status.HTTP_200_OK)
 
         elif task_result.status == REVOKED:
             return Response(JSONRenderer().render({'status': task_result.status}),
+                            content_type='application/json',
                             status=status.HTTP_200_OK)
 
         elif task_result.status == FAILURE:
             return Response(JSONRenderer().render({'status': task_result.status}),
+                            content_type='application/json',
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         else:
