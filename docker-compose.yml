@@ -41,7 +41,7 @@ services:
     environment:
       - DEBUG=1
       - SECRET_KEY=${SECRET_KEY}
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - DJANGO_ALLOWED_HOSTS=localhost
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - REDIS_DB=0
