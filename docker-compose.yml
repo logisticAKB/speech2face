@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     command: gunicorn speech2face.wsgi:application -b 0.0.0.0:8000 --reload
     volumes:
-      - ./:/usr/speech2face/
+      - ./:/usr/src/speech2face/
     ports:
       - 8000:8000
     environment:
@@ -37,7 +37,7 @@ services:
       dockerfile: Dockerfile
     command: celery -A speech2face worker --loglevel=info --logfile=logs/celery.log --concurrency 4
     volumes:
-      - ./:/usr/speech2face/
+      - ./:/usr/src/speech2face/
     environment:
       - DEBUG=1
       - SECRET_KEY=${SECRET_KEY}
