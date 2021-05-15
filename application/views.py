@@ -2,12 +2,13 @@ import os
 from django.shortcuts import render
 from celery.result import AsyncResult
 from rest_framework import status
-from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse
+from django.http import JsonResponse, HttpResponseBadRequest, HttpResponse, HttpResponseNotFound
 from rest_framework.decorators import api_view
 from .tasks import speech2face_task
 from celery import uuid
 from speech2face.settings import MEDIA_ROOT
 from celery.states import PENDING, STARTED, RETRY, SUCCESS, REVOKED, FAILURE
+from .models import UserTask
 
 
 def index(request):
@@ -16,11 +17,17 @@ def index(request):
 
 @api_view(['POST'])
 def submit_speech2face_task(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
+
     audio_file = request.FILES.get('audio_file', None)
     if audio_file is None:
         return HttpResponseBadRequest()
 
     task_id = uuid()
+
+    UserTask.objects.create(user=request.user, task_id=task_id)
+
     file_path = os.path.join(MEDIA_ROOT, f'{task_id}.wav')
     with open(file_path, 'wb+') as f:
         for chunk in audio_file.chunks():
@@ -31,8 +38,36 @@ def submit_speech2face_task(request):
     return JsonResponse({'task_id': task_id}, status=status.HTTP_202_ACCEPTED)
 
 
+@api_view(['GET'])
+def speech2face_task_list(request):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
+
+    user_tasks = UserTask.objects.filter(user__username=request.user.username).values_list('task_id', flat=True)
+    response_dict = {}
+    for i, task_id in enumerate(user_tasks):
+        task_result = AsyncResult(task_id)
+
+        if task_result.status == SUCCESS:
+            response_dict[i] = {'task_id': task_id,
+                                'status': task_result.status,
+                                'result': task_result.result}
+        else:
+            response_dict[i] = {'task_id': task_id,
+                                'status': task_result.status}
+
+    return JsonResponse(response_dict, status=status.HTTP_200_OK)
+
+
 @api_view(['GET', 'DELETE'])
 def manage_speech2face_task(request, task_id):
+    if not request.user.is_authenticated:
+        return HttpResponse(status=status.HTTP_401_UNAUTHORIZED)
+
+    user_tasks = UserTask.objects.filter(user__username=request.user.username).values_list('task_id', flat=True)
+    if not (task_id in user_tasks):
+        return HttpResponseNotFound()
+
     task_result = AsyncResult(task_id)
 
     if request.method == 'GET':
@@ -47,13 +82,10 @@ def manage_speech2face_task(request, task_id):
         elif task_result.status == REVOKED:
             return JsonResponse({'status': task_result.status}, status=status.HTTP_200_OK)
 
-        elif task_result.status == FAILURE:
+        else:
             return JsonResponse({'status': task_result.status}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        else:
-            return HttpResponseBadRequest()
-
     elif request.method == 'DELETE':
-
+        # TODO: Drop from db
         task_result.revoke(terminate=True)
         return HttpResponse(status=status.HTTP_202_ACCEPTED)
