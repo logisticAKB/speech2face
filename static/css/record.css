@@ -1,12 +1,5 @@
 body {
     background: #222032;
-    /*overflow: hidden;*/
-}
-
-.box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
 }
 
 .align-center {
@@ -21,12 +14,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
     opacity:0;
-    /*position: relative;*/
     margin-top: 75px;
-    /*margin-left: -70px;*/
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
     font-size: x-large;
     text-align: center;
     overflow-wrap: normal;
@@ -35,31 +26,6 @@ body {
     animation-delay: 0.8s;
     animation-timing-function: ease-out;
     animation-fill-mode: forwards;
-    /*animation-iteration-count: infinite;*/
-    /*color: #AACCFF;*/
-}
-
-.informer_2 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    opacity:0;
-    /*position: relative;*/
-    margin-top: 75px;
-    /*margin-left: -70px;*/
-    font-family: 'Ubuntu', sans-serif;
-    font-size: x-large;
-    text-align: center;
-    overflow-wrap: normal;
-    color: #6BD6E1;
-    animation: informer-up-anim 2s;
-    /*animation-delay: 0.8s;*/
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
-    /*animation-iteration-count: infinite;*/
-    /*color: #AACCFF;*/
 }
 
 @keyframes informer-up-anim {
@@ -71,14 +37,9 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /*opacity:0;*/
-    /*position: relative;*/
     margin-top: 75px;
-    /*margin-left: -70px;*/
-    /*position: relative;*/
-    /*margin-top: 60px;*/
-    /*margin-left: -70px;*/
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
     font-size: x-large;
     color: #6BD6E1;
     animation: informer-anim 0.5s;
@@ -91,12 +52,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    /*position: relative;*/
     opacity: 0;
     margin-top: 85px;
-    /*margin-left: -15px;*/
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
     font-size: x-large;
     color: #6BD6E1;
     animation: timer-anim 0.5s;
@@ -109,7 +68,6 @@ body {
     position: relative;
     animation: slide-up-anim 1s;
     animation-timing-function: ease-out;
-    /*animation-delay: 0.5s;*/
     animation-fill-mode: forwards;
 }
 
@@ -211,71 +169,7 @@ body {
 	margin: 21px;
 }
 
-.loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /*transform: translate(-50%, -50%);*/
-
-    font-size: 10px;
-    margin: -55px -55px;
-    text-indent: -9999em;
-    width: 11em;
-    height: 11em;
-    border-radius: 50%;
-    background: #6bd6ff;
-    background: -moz-linear-gradient(left, #6bd6ff 10%, rgba(107,214,255, 0) 42%);
-    background: -webkit-linear-gradient(left, #6bd6ff 10%, rgba(107,214,255, 0) 42%);
-    background: -o-linear-gradient(left, #6bd6ff 10%, rgba(107,214,255, 0) 42%);
-    background: -ms-linear-gradient(left, #6bd6ff 10%, rgba(107,214,255, 0) 42%);
-    background: linear-gradient(to right, #6bd6ff 10%, rgba(107,214,255, 0) 42%);
-    /*position: absolute;*/
-    -webkit-animation: load3 1.4s infinite linear;
-    animation: load3 1.4s infinite linear;
-    -webkit-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    transform: translateZ(0);
-}
-.loader:before {
-    width: 50%;
-    height: 50%;
-    background: #6bd6ff;
-    border-radius: 100% 0 0 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: '';
-}
-.loader:after {
-    background: #222032;
-    width: 75%;
-    height: 75%;
-    border-radius: 50%;
-    content: '';
-    margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
-@-webkit-keyframes load3 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
-@keyframes load3 {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+.timer-value {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
 }

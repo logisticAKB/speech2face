@@ -1,0 +1,144 @@
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: 'Quicksand', sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #222032;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th {
+    padding: 12px 15px;
+}
+
+.styled-table td {
+    padding: 12px 15px;
+    height: 64px;
+}
+
+.centred-th-style {
+    text-align: center;
+    padding: 12px 15px;
+}
+
+.centred-td-style {
+    text-align: center;
+    padding: 12px 15px;
+    height: 64px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    /*font-weight: bold;*/
+    /*color: #009879;*/
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #222032;
+}
+
+.image {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.image:hover {
+    opacity: 0.7;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 700px;
+}
+
+.modal-content, .caption {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+    from {
+        transform: scale(0.1)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.new-task-button {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    background-color: #1e90ff;
+    border: none;
+    border-radius: 24px;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.new-task-button:hover {
+    background-color: RoyalBlue;
+}
+
+.headline {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: 32px;
+    color: #222032;
+    float: left;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.greeter {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 15px;
+}
