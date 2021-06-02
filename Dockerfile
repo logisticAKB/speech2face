@@ -1,13 +1,16 @@
 FROM python:3.8
 
-WORKDIR /usr/src/speech2face
+WORKDIR /storage/speech2face
 
-COPY ./requirements.txt /usr/src/speech2face/requirements.txt
+COPY ./requirements.txt /storage/speech2face/requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY ./entrypoint.sh /usr/src/speech2face/entrypoint.sh
+RUN apt-get -y update
+RUN apt-get install -y libsndfile1 ffmpeg
 
-COPY . /usr/src/speech2face/
+COPY ./entrypoint.sh /storage/speech2face/entrypoint.sh
 
-ENTRYPOINT ["/usr/src/speech2face/entrypoint.sh"]
+COPY . /storage/speech2face/
+
+ENTRYPOINT ["/storage/speech2face/entrypoint.sh"]

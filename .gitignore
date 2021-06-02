@@ -133,3 +133,5 @@ dmypy.json
 # Default statics
 static/admin/
 static/rest_framework/
+
+models/

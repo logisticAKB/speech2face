@@ -29,7 +29,7 @@ $.ajaxSetup({
     }
 });
 
-let seconds = 3;
+let seconds = 9;
 let checkResultIntervalSec = 2;
 let recorder = null;
 let promise = navigator.mediaDevices.getUserMedia({audio: true, video: false});

@@ -136,6 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
+MODELS_ROOT = BASE_DIR / 'models'
+
 # CELERY related settings
 CELERY_TASK_TRACK_STARTED = True
 
