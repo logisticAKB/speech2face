@@ -8,7 +8,7 @@ import numpy as np
 from math import ceil
 from PIL import Image
 from celery import shared_task
-from .network import Autoencoder
+from .network import Autoencoder, GAN
 from speech2face.settings import MODELS_ROOT
 from celery.signals import worker_process_init
 
@@ -18,9 +18,11 @@ import matplotlib.pyplot as plt
 @worker_process_init.connect()
 def on_worker_init(**_):
     global model
-    model = Autoencoder()
+    # model = Autoencoder()
+    model = GAN()
     checkpoint = torch.load(os.path.join(MODELS_ROOT, 'model.pt'), map_location=torch.device('cpu'))
-    model.load_state_dict(checkpoint['model_state_dict'])
+    # model.load_state_dict(checkpoint['model_state_dict'])
+    model.load_state_dict(checkpoint)
     model.eval()
 
 
