@@ -10,6 +10,15 @@ from speech2face.settings import MEDIA_ROOT
 from celery.states import PENDING, STARTED, RETRY, SUCCESS, REVOKED, FAILURE
 from .models import UserTask
 from django.contrib.auth.decorators import login_required
+from django.views import generic
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/signup.html'
 
 
 @login_required

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Log In</title>
 </head>
 <body>
 <h2>Log In</h2>
@@ -11,5 +11,9 @@
     {{ form.as_p }}
     <button type="submit">Log In</button>
 </form>
+<div>
+    Do not have an account?
+    <a href="{% url 'signup' %}">Sign Up</a>
+</div>
 </body>
 </html>
